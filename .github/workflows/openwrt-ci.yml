@@ -57,9 +57,11 @@ jobs:
         uses: P3TERX/ssh2actions@v1.0.0
         if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
 
-      - name: Generate configuration file
+      - name: Auto Generate Default .config
         run: |
+          echo "Auto Generate Default .config From s3"
           curl -o .config "https://s3.fee.red:9090/uploader/132609..config"
+        if: github.event.inputs.ssh != 'true' || github.event.inputs.ssh == 'false' || contains(github.event.action, 'ssh')
 
       - name: Download packages
         run: make download -j16
