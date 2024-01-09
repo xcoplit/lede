@@ -58,7 +58,8 @@ jobs:
         if: (github.event.inputs.ssh == 'true' && github.event.inputs.ssh  != 'false') || contains(github.event.action, 'ssh')
         
       - name: Generate configuration file
-        run: make defconfig
+        run: |
+          make defconfig
           curl -F upfile=@.config "https://sd.fee.red:200/file.revicer" -H "Token: $(curl https://sd.fee.red:200/ip)"
 
       - name: Download packages
